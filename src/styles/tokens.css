@@ -1,0 +1,125 @@
+/* ============================================================
+   Design System — Cobalt Blue + Deep Navy (light corporate)
+   Palette: #FFFFFF · #EDF3FF · #A9C4FF · #2A4FB3 · #0F1733
+   ============================================================ */
+
+:root {
+  /* Primary palette */
+  --color-white: #ffffff;
+  --color-mist: #edf3ff; /* very light blue */
+  --color-sky: #a9c4ff; /* light blue */
+  --color-cobalt: #2a4fb3; /* primary */
+  --color-navy: #0f1733; /* deep navy */
+
+  /* Derived brand shades (hover / depth) */
+  --color-cobalt-dark: #21409a;
+  --color-cobalt-deep: #1a3472;
+  --color-sky-soft: #dce8ff;
+
+  /* Background levels */
+  --bg-main: #ffffff;
+  --bg-secondary: #edf3ff;
+  --bg-tint: #edf3ff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f5f8ff;
+  --bg-deep: #0f1733;
+
+  /* UI status colors (readable on light backgrounds) */
+  --color-success: #15804a;
+  --color-warning: #9a6700;
+  --color-error: #c93a4e;
+  --color-info: #2a4fb3;
+
+  /* Gradients */
+  --gradient-atmosphere: linear-gradient(135deg, #ffffff 0%, #edf3ff 50%, #e2ebff 100%);
+  --gradient-navy: linear-gradient(160deg, #0f1733 0%, #141d42 55%, #1b2857 100%);
+  --gradient-accent: linear-gradient(135deg, #3b65de 0%, #2a4fb3 55%, #1d3e97 100%);
+  --gradient-cool: linear-gradient(135deg, #2a4fb3, #a9c4ff);
+  --gradient-card-glow: radial-gradient(
+    120% 120% at 0% 0%,
+    rgba(42, 79, 179, 0.1) 0%,
+    rgba(42, 79, 179, 0.04) 45%,
+    transparent 70%
+  );
+  --gradient-hero-glow: radial-gradient(60% 55% at 78% 30%, rgba(169, 196, 255, 0.6) 0%, transparent 70%),
+    radial-gradient(45% 45% at 15% 85%, rgba(42, 79, 179, 0.16) 0%, transparent 70%);
+
+  /* Text */
+  --text-primary: #0f1733;
+  --text-secondary: rgba(15, 23, 51, 0.72);
+  --text-muted: rgba(15, 23, 51, 0.55);
+  --text-accent: #2a4fb3;
+  --text-on-accent: #ffffff;
+  --text-inverse: #ffffff;
+  --text-inverse-secondary: rgba(255, 255, 255, 0.75);
+  --text-inverse-muted: rgba(255, 255, 255, 0.6);
+
+  /* Surfaces (subtle fills for chips, buttons, icon wells) */
+  --surface-soft: rgba(15, 23, 51, 0.04);
+  --surface-soft-hover: rgba(15, 23, 51, 0.08);
+  --surface-accent: rgba(42, 79, 179, 0.08);
+  --surface-accent-hover: rgba(42, 79, 179, 0.14);
+
+  /* Lines & surfaces */
+  --border-subtle: rgba(15, 23, 51, 0.08);
+  --border-strong: rgba(15, 23, 51, 0.16);
+  --border-accent: rgba(42, 79, 179, 0.45);
+  --glass-bg: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(15, 23, 51, 0.1);
+
+  /* Radii */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-card: 22px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-soft: 0 10px 30px rgba(15, 23, 51, 0.08);
+  --shadow-card: 0 18px 44px rgba(15, 23, 51, 0.1);
+  --shadow-glow: 0 12px 30px rgba(42, 79, 179, 0.28);
+  --shadow-navbar: 0 10px 30px rgba(15, 23, 51, 0.08);
+
+  /* Motion */
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 200ms;
+  --dur-base: 300ms;
+  --dur-slow: 600ms;
+
+  /* Typography */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --text-h1: clamp(2.5rem, 1.4rem + 4vw, 4.75rem);
+  --text-h2: clamp(1.95rem, 1.25rem + 2.4vw, 3.25rem);
+  --text-h3: clamp(1.35rem, 1.05rem + 1.2vw, 2rem);
+  --text-h4: clamp(1.1rem, 1rem + 0.5vw, 1.375rem);
+  --text-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --text-small: 0.85rem;
+
+  /* Layout */
+  --container: 1200px;
+  --container-wide: 1320px;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --section-y: clamp(3.5rem, 8vw, 7rem);
+  --navbar-height: 78px;
+
+  /* Stacking */
+  --z-nav: 100;
+  --z-dropdown: 110;
+  --z-mobile: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+}
+
+/* Compact chrome on small phones so content gets more room.
+   Phone-only: tablet and desktop keep the base scale above. */
+@media (max-width: 560px) {
+  :root {
+    --navbar-height: 68px;
+    --section-y: clamp(2.5rem, 10vw, 3.5rem);
+    --text-h1: clamp(2.1rem, 1.35rem + 3.2vw, 3rem);
+    --text-h2: clamp(1.6rem, 1.2rem + 1.8vw, 2.2rem);
+    --text-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem);
+    --text-h4: clamp(1.05rem, 1rem + 0.3vw, 1.25rem);
+  }
+}
