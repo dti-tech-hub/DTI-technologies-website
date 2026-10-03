@@ -272,42 +272,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* 5. OUR TEAM */}
-      <section className="section about-team" aria-labelledby="team-heading">
-        <div className="container">
-          <SectionHeading
-            eyebrow="Our team"
-            title="People behind the technology."
-            description="Great technology is built by people who combine technical expertise, business understanding, and a commitment to doing the work well."
-            id="team-heading"
-            align="center"
-          />
-
-          <div className="about-team__grid">
-            {team.map((member, index) => (
-              <Reveal key={member.id} delay={index * 80}>
-                <article className="about-team__card">
-                  <figure className="about-team__avatar" aria-label={member.name}>
-                    {member.image ? (
-                      <img src={member.image} alt="" loading="lazy" />
-                    ) : (
-                      <span className="about-team__placeholder" aria-hidden="true">
-                        <Icon name="user" size={40} />
-                      </span>
-                    )}
-                  </figure>
-                  <div className="about-team__info">
-                    <h3>{member.name}</h3>
-                    <span className="about-team__role">{member.role}</span>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 6. FINAL CTA */}
+      {/* 5. FINAL CTA */}
       <section className="section section--tight">
         <div className="container">
           <CtaBand

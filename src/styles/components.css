@@ -897,6 +897,13 @@ select.field__control option {
   background: var(--gradient-cool);
 }
 
+.modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
 @keyframes modal-fade {
   from {
     opacity: 0;
@@ -1142,7 +1149,8 @@ select.field__control option {
   .modal__close,
   .search__clear,
   .link-arrow,
-  .breadcrumbs a {
+  .breadcrumbs a,
+  .service-glass-card__btn {
     min-height: 44px;
   }
 
@@ -1152,5 +1160,355 @@ select.field__control option {
   .breadcrumbs a {
     display: inline-flex;
     align-items: center;
+  }
+}
+
+/* ---------- Ditto AI assistant ---------- */
+
+.ditto-launcher {
+  position: fixed;
+  right: clamp(1rem, 3vw, 1.5rem);
+  bottom: clamp(1rem, 3vw, 1.5rem);
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1.5px solid rgba(42, 79, 179, 0.45);
+  box-shadow: 0 10px 26px rgba(15, 23, 51, 0.18), 0 0 0 4px rgba(169, 196, 255, 0.25);
+  cursor: pointer;
+  transition: transform var(--dur-fast, 150ms) ease, box-shadow var(--dur-fast, 150ms) ease;
+}
+
+.ditto-launcher:hover {
+  transform: scale(1.06);
+  box-shadow: 0 14px 32px rgba(15, 23, 51, 0.22), 0 0 0 6px rgba(169, 196, 255, 0.32);
+}
+
+.ditto-launcher:focus-visible {
+  outline: 3px solid var(--color-cobalt);
+  outline-offset: 2px;
+}
+
+.ditto-panel {
+  position: fixed;
+  right: clamp(0.75rem, 3vw, 1.5rem);
+  bottom: calc(clamp(1rem, 3vw, 1.5rem) + 72px);
+  z-index: 95;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(420px, calc(100vw - 1.5rem));
+  height: min(620px, calc(100dvh - 7.5rem));
+  background: #ffffff;
+  border: 1px solid var(--border-subtle, #d7e2f7);
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(15, 23, 51, 0.22);
+  overflow: hidden;
+}
+
+.ditto-panel__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border-subtle, #d7e2f7);
+  background: linear-gradient(180deg, #f4f8ff, #ffffff);
+}
+
+.ditto-panel__identity {
+  display: grid;
+  line-height: 1.2;
+  flex: 1;
+}
+
+.ditto-panel__identity strong {
+  color: var(--text-primary, #0f1733);
+}
+
+.ditto-panel__identity span {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #4a5675);
+}
+
+.ditto-panel__iconbtn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  color: var(--text-secondary, #4a5675);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.ditto-panel__iconbtn:hover {
+  background: var(--surface-soft, #eef3ff);
+}
+
+.ditto-panel__body {
+  overflow-y: auto;
+  padding: 1rem;
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
+  background: #fbfdff;
+}
+
+.ditto-welcome {
+  display: grid;
+  justify-items: center;
+  gap: 0.85rem;
+  text-align: center;
+  padding: 1rem 0.5rem;
+}
+
+.ditto-welcome__text {
+  white-space: pre-line;
+  color: var(--text-primary, #0f1733);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.ditto-quick {
+  display: grid;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.ditto-quick__btn {
+  padding: 0.6rem 0.9rem;
+  border-radius: 12px;
+  border: 1px solid rgba(42, 79, 179, 0.3);
+  background: #ffffff;
+  color: var(--color-cobalt, #2a4fb3);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--dur-fast, 150ms) ease;
+}
+
+.ditto-quick__btn:hover {
+  background: var(--surface-accent, #edf3ff);
+}
+
+.ditto-msg {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.ditto-msg--user {
+  justify-content: flex-end;
+}
+
+.ditto-msg__bubble {
+  max-width: 82%;
+  padding: 0.65rem 0.85rem;
+  border-radius: 14px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  white-space: normal;
+}
+
+.ditto-msg--ditto .ditto-msg__bubble {
+  background: #ffffff;
+  border: 1px solid var(--border-subtle, #d7e2f7);
+  color: var(--text-primary, #0f1733);
+  border-bottom-left-radius: 4px;
+}
+
+.ditto-msg--user .ditto-msg__bubble {
+  background: #dce9ff;
+  color: var(--text-primary, #0f1733);
+  border-bottom-right-radius: 4px;
+}
+
+.ditto-msg__bubble p {
+  margin: 0 0 0.25rem;
+}
+
+.ditto-msg__bubble p:last-child {
+  margin-bottom: 0;
+}
+
+.ditto-msg__link {
+  display: inline-block;
+  margin-top: 0.35rem;
+  color: var(--color-cobalt, #2a4fb3);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ditto-typing {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.ditto-typing span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #a9c4ff;
+  animation: ditto-blink 1.1s infinite ease-in-out;
+}
+
+.ditto-typing span:nth-child(2) { animation-delay: 0.18s; }
+.ditto-typing span:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes ditto-blink {
+  0%, 80%, 100% { opacity: 0.35; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-3px); }
+}
+
+.ditto-error {
+  color: #b42318;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.ditto-panel__input {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid var(--border-subtle, #d7e2f7);
+  background: #ffffff;
+}
+
+.ditto-panel__input textarea {
+  flex: 1;
+  resize: none;
+  max-height: 120px;
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle, #d7e2f7);
+  font: inherit;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.ditto-panel__input textarea:focus {
+  border-color: var(--color-cobalt, #2a4fb3);
+}
+
+.ditto-send {
+  align-self: flex-end;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: none;
+  background: var(--color-cobalt, #2a4fb3);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.ditto-send:disabled {
+  background: #a9c4ff;
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .ditto-launcher {
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .ditto-panel {
+    right: 0.75rem;
+    left: 0.75rem;
+    width: auto;
+    height: calc(100dvh - 6.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ditto-typing span {
+    animation: none;
+    opacity: 0.7;
+  }
+
+  .ditto-launcher {
+    transition: none;
+  }
+}
+
+/* Ditto polish overrides */
+.ditto-launcher {
+  width: 58px;
+  height: 58px;
+  animation: ditto-float 4s ease-in-out infinite;
+}
+
+@keyframes ditto-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.ditto-launcher:hover {
+  animation-play-state: paused;
+}
+
+.ditto-panel {
+  width: min(400px, calc(100vw - 1.5rem));
+  height: min(470px, calc(100dvh - 7.5rem));
+}
+
+@media (max-width: 480px) {
+  .ditto-panel {
+    right: 0.75rem;
+    left: 0.75rem;
+    width: auto;
+    height: calc(100dvh - 6.5rem);
+  }
+
+  .ditto-launcher {
+    right: 1rem;
+    bottom: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ditto-launcher {
+    animation: none;
+  }
+}
+
+.ditto-hint {
+  position: fixed;
+  right: calc(clamp(1rem, 3vw, 1.5rem) + 70px);
+  bottom: calc(clamp(1rem, 3vw, 1.5rem) + 14px);
+  z-index: 90;
+  padding: 0.55rem 1rem;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1.5px solid var(--color-cobalt, #2a4fb3);
+  box-shadow: 0 8px 20px rgba(15, 23, 51, 0.14);
+  color: var(--color-cobalt, #2a4fb3);
+  font-weight: 700;
+  white-space: nowrap;
+  animation: ditto-float 4s ease-in-out infinite;
+}
+
+.ditto-hint::after {
+  content: '';
+  position: absolute;
+  right: -7px;
+  bottom: 14px;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-top: 1.5px solid var(--color-cobalt, #2a4fb3);
+  border-right: 1.5px solid var(--color-cobalt, #2a4fb3);
+  transform: rotate(45deg);
+}
+
+@media (max-width: 480px) {
+  .ditto-hint {
+    right: calc(1rem + 64px);
+    bottom: calc(1rem + 12px);
   }
 }

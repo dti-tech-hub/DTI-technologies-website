@@ -81,7 +81,7 @@ export default function Navbar() {
             </span>
             <span className="brand__text">
               <span className="brand__name">DTI Technologies</span>
-              <span className="brand__tag">Technology, Innovation, Transformation</span>
+              <span className="brand__tag">Design. Think. Innovate</span>
             </span>
           </Link>
 
@@ -144,6 +144,20 @@ export default function Navbar() {
                             </ul>
                           </div>
                         ))}
+                      </div>
+                      <div className="nav-dropdown__footer">
+                        <Link
+                          to="/services"
+                          className={`nav-dropdown__item ${
+                            location.pathname === '/services' ? 'is-active' : ''
+                          }`.trim()}
+                          end
+                        >
+                          <span className="nav-dropdown__item-icon" aria-hidden="true">
+                            <Icon name="grid" size={14} />
+                          </span>
+                          All services overview
+                        </Link>
                       </div>
                     </div>
                   </li>

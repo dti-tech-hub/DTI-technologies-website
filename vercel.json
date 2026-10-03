@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/api/ditto", "destination": "/api/ditto.js" },
+    { "source": "/api/contact", "destination": "/api/contact.js" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
+}

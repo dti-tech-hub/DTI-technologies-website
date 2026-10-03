@@ -153,7 +153,7 @@ click(dropdownTrigger, 'services dropdown trigger');
 await sleep(200);
 check(dropdownTrigger.getAttribute('aria-expanded') === 'true', 'services dropdown opens (aria-expanded)');
 check($('.nav-dropdown').classList.contains('is-open'), 'dropdown panel marked open');
-check($$('#services-dropdown a').length === 10, 'dropdown lists 9 services + overview link');
+check($$('#services-dropdown a').length === 11, 'dropdown lists 10 services + overview link');
 
 const genAiLink = $$('#services-dropdown a').find((a) => a.getAttribute('href') === '/services/generative-ai');
 click(genAiLink, 'dropdown service link');
@@ -170,85 +170,25 @@ await sleep(250);
 check(currentPath() === '/', 'navbar Home link returns home');
 
 // ---------------------------------------------------------------------------
-section('Careers — search, filters, details, validation');
+section('Careers — coming soon message and links');
 click($$('.nav-menu a').find((a) => (a.textContent || '').trim() === 'Careers'), 'nav Careers link');
 await sleep(250);
 check(currentPath() === '/careers', 'careers route reachable from navbar');
-check((text('h1') || '').includes("Build What's Next With Us"), 'careers headline renders');
-await sleep(700);
-
-check($$('article.job-card').length === 4, 'four sample roles listed after loading');
-
-setValue($('#job-search'), 'zzzzzz');
-await sleep(200);
-check(byText('.state-block', 'No roles match your search.') !== undefined, 'empty state appears for no matches');
-
-click(byText('button', 'Reset filters'), 'reset filters button');
-await sleep(200);
-check($$('article.job-card').length === 4, 'reset filters restores roles');
-
-const typeSelect = $('#job-type');
-setSelect(typeSelect, 'Contract');
-await sleep(200);
-check($$('article.job-card').length === 1, 'employment type filter narrows results');
-setSelect(typeSelect, 'All Types');
-await sleep(200);
-
-click(byText('button', 'View details'), 'view details button');
-await sleep(200);
-check(openModal() !== null, 'job details dialog opens');
-check(byText('.modal', 'Responsibilities') !== undefined, 'dialog shows responsibilities');
-check(byText('.modal', 'Requirements') !== undefined, 'dialog shows requirements');
-
-click(byText('.modal button', 'Apply now'), 'apply now button');
-await sleep(200);
-check(byText('.modal', 'Apply for this role') !== undefined, 'application dialog opens');
-
-click(byText('.modal button', 'Submit application'), 'submit application button');
-await sleep(200);
-check($$('.modal .field__error').length >= 3, 'application form shows validation errors');
-
-click($('.modal__close'), 'modal close button');
-await sleep(200);
-check(openModal() === null, 'dialog closes');
+check((text('h1') || '').includes('Build the future with us'), 'careers headline renders');
+check(byText('h2', 'Career opportunities are coming soon.') !== undefined, 'coming soon message renders');
+check(byText('button, a', 'Talk to Our Team') !== undefined || byText('a', 'Talk to Our Team') !== undefined, 'talk to team CTA renders');
+check(byText('a', 'Contact Us') !== undefined, 'contact us CTA renders');
+await sleep(300);
 
 // ---------------------------------------------------------------------------
-section('Blog — search, categories, load more');
+section('Blog — coming soon message and CTA');
 click($$('.nav-menu a').find((a) => (a.textContent || '').trim() === 'Blog'), 'nav Blog link');
 await sleep(250);
 check(currentPath() === '/blog', 'blog route reachable');
-await sleep(700);
-check($('.featured-article') !== null, 'featured article renders');
-check($$('.article-card').length === 3, 'three latest articles listed initially');
-
-setValue($('#blog-search'), 'zzzzzz');
-await sleep(200);
-check(byText('.state-block', 'No articles found.') !== undefined, 'blog empty state appears');
-
-click($('.search__clear'), 'search clear button');
-await sleep(200);
-check($$('.article-card').length === 3, 'clearing search restores list');
-
-click(byText('button', 'Load more articles'), 'load more button');
-await sleep(200);
-check($$('.article-card').length === 5, 'load more reveals remaining articles');
-check(byText('.form__note', 'end of the list') !== undefined, 'end-of-list message appears');
-
-click(byText('.filter-chip', 'Cloud'), 'Cloud category chip');
-await sleep(200);
-check($$('.article-card').length === 1, 'category filter narrows articles');
-check($('.featured-article') === null, 'featured article hidden while filtered');
-click(byText('.filter-chip', 'All'), 'All category chip');
-await sleep(200);
-
-const firstArticleTitle = $('.article-card__title a');
-click(firstArticleTitle, 'article card title link');
-await sleep(350);
-check(currentPath().startsWith('/blog/'), 'article card navigates to article page');
-check($$('.article-page__content p').length >= 3, 'article body renders');
-click(byText('a', 'Back to all articles'), 'back to articles link');
-await sleep(250);
-check(currentPath() === '/blog', 'back link returns to blog index');
+check((text('h1') || '').includes('coming soon'), 'blog coming soon headline renders');
+check(byText('h2', 'Our insights are coming soon.') !== undefined, 'blog coming soon message renders');
+check(byText('a', 'Talk to Our Team') !== undefined, 'blog CTA renders');
+await sleep(300);
 
 // ---------------------------------------------------------------------------
 section('Portfolio — loading, filters, detail modal');
@@ -256,16 +196,16 @@ click($$('.nav-menu a').find((a) => (a.textContent || '').trim() === 'Portfolio'
 await sleep(250);
 check(currentPath() === '/portfolio', 'portfolio route reachable');
 await sleep(700);
-check($$('article.portfolio-card').length === 6, 'six portfolio placeholders listed');
+check($$('article.portfolio-item').length === 6, 'six portfolio items listed');
 
 click(byText('.filter-chip', 'AI'), 'AI category chip');
 await sleep(200);
-check($$('article.portfolio-card').length === 1, 'portfolio category filter works');
+check($$('article.portfolio-item').length === 2, 'portfolio category filter works');
 check(byText('.filter-chip', 'AI').getAttribute('aria-pressed') === 'true', 'active filter is aria-pressed');
 click(byText('.filter-chip', 'All'), 'All category chip');
 await sleep(200);
 
-click(byText('article.portfolio-card button', 'View details'), 'portfolio view details button');
+click($$('article.portfolio-item button').find((b) => b.getAttribute('aria-label') === 'View details for Customer Self-Service Portal'), 'portfolio view details button');
 await sleep(200);
 check(openModal() !== null, 'portfolio details dialog opens');
 check(byText('.modal', 'Outcome') !== undefined, 'dialog shows outcome section');
@@ -279,29 +219,31 @@ section('Contact — validation & success state');
 click($$('.nav-menu a').find((a) => (a.textContent || '').trim() === 'Contact'), 'nav Contact link');
 await sleep(250);
 check(currentPath() === '/contact', 'contact route reachable');
-check((text('h1') || '').includes('Have a Challenge Worth Solving'), 'contact headline renders');
+check((text('h1') || '').includes("Let's build something valuable"), 'contact headline renders');
 
 const contactForm = $('#contact-form form');
 submit(contactForm);
 await sleep(200);
-check($$('#contact-form .field__error').length >= 5, 'empty submit shows required-field errors');
+check($$('#contact-form .field__error').length >= 4, 'empty submit shows required-field errors');
 
-setValue($('#contact-firstName'), 'Alex');
-setValue($('#contact-lastName'), 'Morgan');
+setValue($('#contact-name'), 'Alex Morgan');
 setValue($('#contact-email'), 'not-an-email');
-setSelect($('#contact-inquiryType'), 'Generative AI Services');
 setValue($('#contact-message'), 'Too short');
 submit(contactForm);
 await sleep(200);
 check(byText('#contact-form .field__error', 'Enter a valid email address') !== undefined, 'invalid email rejected');
 check(byText('#contact-form .field__error', 'at least 20 characters') !== undefined, 'short message rejected');
 
+window.fetch = async (url, options) => {
+  if (String(url).includes('/api/contact')) {
+    return { ok: true, status: 200, json: async () => ({ ok: true }) };
+  }
+  throw new Error('network disabled in tests');
+};
+
 setValue($('#contact-email'), 'alex.morgan@example.com');
+setSelect($('#contact-service'), $$('#contact-service option')[1].textContent);
 setValue($('#contact-message'), 'We are planning a data platform modernisation and would like to discuss scope.');
-const consent = $('#contact-consent');
-consent.click();
-await sleep(100);
-check(consent.checked === true, 'consent checkbox toggles');
 await sleep(100);
 submit(contactForm);
 const successShown = await waitFor(
@@ -369,7 +311,7 @@ click(byText('.footer__links a', 'Careers'), 'footer careers link');
 await sleep(250);
 check(currentPath() === '/careers', 'footer careers link works');
 
-check($('.back-to-top') !== null, 'back-to-top control exists');
+check($('.ditto-launcher') !== null, 'Ditto launcher exists');
 check($('.skip-link') !== null, 'skip link exists');
 check($$('main h1').length === 1, 'exactly one h1 in main content');
 

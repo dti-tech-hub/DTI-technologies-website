@@ -393,6 +393,50 @@ export const services = [
         'UI/UX design, quality assurance, software testing, cloud services, digital experience, and SEO and digital presence.',
     },
   },
+  {
+    slug: 'web-applications',
+    number: '10',
+    icon: 'globe',
+    group: 'Software',
+    title: 'Web Applications',
+    navLabel: 'Web Applications',
+    cardText: 'Responsive, accessible browser applications built around real user journeys.',
+    headline: 'Web Applications That Load Fast And Feel Effortless.',
+    summary:
+      'We build browser-based applications that stay quick on real connections and simple to use on any screen — from the first sketch through to launch and ongoing iteration.',
+    capabilities: [
+      'Responsive web front-ends',
+      'Single-page applications',
+      'Content-managed websites',
+      'E-commerce and booking flows',
+      'API and third-party integrations',
+      'Performance and accessibility audits',
+    ],
+    approach: [
+      {
+        title: 'Design the journey first',
+        text: 'We map the pages and states a person actually moves through, so nothing important hides behind extra clicks.',
+      },
+      {
+        title: 'Build mobile-first',
+        text: 'Layouts are designed for small screens first and scale up, which keeps the experience usable on every device.',
+      },
+      {
+        title: 'Keep it fast',
+        text: 'Lean assets, sensible caching and image handling stop the interface feeling sluggish on ordinary networks.',
+      },
+      {
+        title: 'Make it maintainable',
+        text: 'Reusable components and clear structure mean the next change is a small edit rather than a rebuild.',
+      },
+    ],
+    note: 'Only capabilities the company actually provides should ultimately be presented as factual business claims.',
+    meta: {
+      title: 'Web Applications',
+      description:
+        'Responsive web applications, single-page applications, content-managed websites, e-commerce, API integrations, and performance and accessibility audits.',
+    },
+  },
 ];
 
 export const getServiceBySlug = (slug) => services.find((service) => service.slug === slug);

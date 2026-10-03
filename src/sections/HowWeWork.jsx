@@ -17,7 +17,12 @@ export default function HowWeWork() {
 
         <div className="process__roadmap">
           {processSteps.map((step, index) => (
-            <Reveal key={step.number} delay={index * 80} className={`process__row process__row--${index + 1}`}>
+            <Reveal
+              key={step.number}
+              variant={index % 2 === 0 ? 'left' : 'right'}
+              delay={index * 80}
+              className={`process__row process__row--${index + 1}`}
+            >
               <article className="process__stage">
                 <div className="process__art">
                   <ProcessArt name={step.number} />

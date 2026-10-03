@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { footerColumns, footerSocials } from '../data/navigation.js';
 import { site } from '../data/site.js';
 import Icon from '../components/Icon.jsx';
+
 import logo from '../assets/logo.png';
 
 const socialIcons = {
@@ -31,17 +32,33 @@ export default function Footer() {
             <p>{site.description}</p>
             <div className="footer__socials-wrap">
               <div className="footer__socials">
-                {footerSocials.map((social) => (
-                  <span
-                    key={social.id}
-                    className="footer__social"
-                    role="img"
-                    aria-label={`${social.label} — link pending approval`}
-                    title={`${social.label} — official profile pending approval`}
-                  >
-                    <Icon name={socialIcons[social.id]} size={16} />
-                  </span>
-                ))}
+                {footerSocials.map((social) => {
+                  const url = social.id === 'instagram'
+                    ? 'https://www.instagram.com/dtitechnologies?igsh=MXR0NGhjdjRtOG1pYg=='
+                    : social.url;
+                  return url ? (
+                    <a
+                      key={social.id}
+                      className="footer__social"
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${social.label} — official profile`}
+                    >
+                      <Icon name={socialIcons[social.id]} size={16} />
+                    </a>
+                  ) : (
+                    <span
+                      key={social.id}
+                      className="footer__social"
+                      role="img"
+                      aria-label={`${social.label} — link pending approval`}
+                      title={`${social.label} — official profile pending approval`}
+                    >
+                      <Icon name={socialIcons[social.id]} size={16} />
+                    </span>
+                  );
+                })}
               </div>
             </div>
           </div>

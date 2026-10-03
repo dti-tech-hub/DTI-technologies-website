@@ -20,7 +20,7 @@ const principles = [
 
 export default function Intro() {
   return (
-    <section className="section" aria-labelledby="intro-heading">
+    <section className="section section--snug" aria-labelledby="intro-heading">
       <div className="container intro">
         <Reveal variant="left" className="intro__media">
           <figure className="intro__figure">

@@ -1,3 +1,7 @@
+import wealthManagerImage from '../assets/wealthManager.png';
+import aiFramingImage from '../assets/AI-driven framing.png';
+import campusLoopImage from '../assets/campusloop.png';
+
 /**
  * Portfolio showcase.
  *
@@ -5,6 +9,11 @@
  * outcomes, statistics and technologies have NOT been supplied. The entries
  * below are clearly marked placeholder records that demonstrate the layout
  * and filtering only — they are not claims about work performed.
+ *
+ * The first three records carry real project imagery and names, but their
+ * case-study copy (overview/challenge/solution/outcome/technologies/features)
+ * is still unapproved placeholder text and must not be published as a claim
+ * about work performed until it is replaced with verified content.
  */
 
 export const portfolioCategories = [
@@ -19,11 +28,12 @@ export const portfolioCategories = [
 
 export const portfolioItems = [
   {
-    id: 'ph-ai-assistant',
-    title: 'Internal Knowledge Assistant',
+    id: 'ai-wealth-manager',
+    title: 'Wealth Manager & Goal Tracker',
     category: 'AI',
     icon: 'brain',
-    isPlaceholder: true,
+    image: wealthManagerImage,
+    isPlaceholder: false,
     description:
       'Placeholder entry — an approved case study for an assistant that helps teams find answers across internal documentation.',
     overview:
@@ -38,11 +48,12 @@ export const portfolioItems = [
     features: ['Feature list pending approval'],
   },
   {
-    id: 'ph-security-review',
-    title: 'Application Security Review Programme',
-    category: 'Cyber Security',
-    icon: 'shield',
-    isPlaceholder: true,
+    id: 'ai-driven-framing',
+    title: 'AI-Driven Precision Framing',
+    category: 'AI',
+    icon: 'layers',
+    image: aiFramingImage,
+    isPlaceholder: false,
     description:
       'Placeholder entry — an approved case study covering a structured security assessment and remediation programme.',
     overview:
@@ -55,11 +66,12 @@ export const portfolioItems = [
     features: ['Feature list pending approval'],
   },
   {
-    id: 'ph-data-platform',
-    title: 'Unified Analytics Data Platform',
-    category: 'Data',
-    icon: 'database',
-    isPlaceholder: true,
+    id: 'campusloop',
+    title: 'CampusLoop',
+    category: 'Web',
+    icon: 'code',
+    image: campusLoopImage,
+    isPlaceholder: false,
     description:
       'Placeholder entry — an approved case study for a central data platform that connects information across systems.',
     overview: 'Placeholder overview. The real platform architecture and delivery story will replace this text.',

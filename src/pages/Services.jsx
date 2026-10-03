@@ -1,105 +1,116 @@
-import { Link } from 'react-router-dom';
 import Seo from '../components/Seo.jsx';
 import Icon from '../components/Icon.jsx';
 import ServiceCard from '../components/ServiceCard.jsx';
-import SectionHeading from '../components/SectionHeading.jsx';
 import Breadcrumbs from '../components/Breadcrumbs.jsx';
 import Button from '../components/Button.jsx';
 import Reveal from '../components/Reveal.jsx';
-import CtaBand from '../components/CtaBand.jsx';
 import { services } from '../data/services.js';
-import { serviceGroups } from '../data/navigation.js';
+import servicesImage from '../assets/services.png';
+
+const LIFECYCLE = ['AI', 'Data', 'Software', 'Security', 'Consulting', 'Operations'];
 
 export default function Services() {
   return (
     <>
       <Seo
         title="Services"
-        description="Nine service areas: generative AI, cyber security, data engineering, application development, data management, IT consulting, outsourcing, maintenance, and other digital services."
+        description="Technology built around your business — AI, data, software, security, consulting, and operations."
         path="/services"
       />
 
-      <section className="page-hero" aria-labelledby="services-page-heading">
-        <div className="atmosphere" aria-hidden="true">
-          <span className="atmosphere__blob atmosphere__blob--primary" style={{ top: '-25%', left: '-5%' }} />
-          <span className="atmosphere__grid" />
-        </div>
-        <div className="container page-hero__content">
-          <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Services' }]} />
-          <span className="eyebrow">What we do</span>
-          <h1 id="services-page-heading">Technology services across the full delivery lifecycle.</h1>
-          <p className="lead">
-            From intelligent systems and secure applications to data platforms and long-term support —
-            explore the capability areas we work in.
-          </p>
-          <div className="page-hero__actions">
-            <Button to="/contact" size="lg" arrow>
-              Talk to Our Team
-            </Button>
+      <section className="contact-hero" aria-labelledby="services-page-heading">
+        <div className="container contact-hero__inner">
+          <div className="contact-hero__content">
+            <Reveal variant="left">
+              <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Services' }]} />
+              <span className="eyebrow">Our Services</span>
+              <h1 id="services-page-heading">Technology built around your business.</h1>
+              <p className="lead">
+                From AI and data to software, security, and consulting, we provide practical
+                technology capabilities designed around real business needs.
+              </p>
+              <div className="contact-hero__actions">
+                <Button to="/contact" arrow>
+                  Talk to Our Team
+                </Button>
+              </div>
+            </Reveal>
+          </div>
+
+          <div className="contact-hero__visual">
+            <Reveal variant="right">
+              <figure className="contact-hero__figure">
+                <img
+                  src={servicesImage}
+                  alt="DTI Technologies services"
+                  loading="eager"
+                  decoding="async"
+                />
+              </figure>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="section" aria-labelledby="service-catalogue-heading">
+      <section className="section section--tight" aria-labelledby="what-we-do-heading">
         <div className="container">
-          <SectionHeading
-            eyebrow="Service catalogue"
-            title="Nine ways we help businesses move forward."
-            description="Each service can stand alone or combine into a broader engagement — shaped around your goals."
-            id="service-catalogue-heading"
-            align="center"
-          />
+          <Reveal>
+            <div style={{ maxWidth: '44rem', marginBottom: '2rem' }}>
+              <span className="eyebrow">What we do</span>
+              <h2 id="what-we-do-heading">Technology capabilities that move businesses forward.</h2>
+              <p className="lead" style={{ fontSize: '1.05rem' }}>
+                Each capability can stand alone or combine into a broader engagement — shaped
+                around your goals, your constraints, and the outcomes that matter.
+              </p>
+            </div>
+          </Reveal>
 
           <div className="grid grid--3">
             {services.map((service, index) => (
-              <ServiceCard key={service.slug} service={service} index={index} />
+              <ServiceCard key={service.slug} service={service} index={index} compact />
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section section--tint" aria-labelledby="grouped-heading">
+      <section className="section section--tint section--tight" aria-labelledby="lifecycle-heading">
         <div className="container">
-          <SectionHeading
-            eyebrow="Browse by focus"
-            title="Organised the way challenges arise."
-            description="Grouped by the kind of problem you are trying to solve."
-            id="grouped-heading"
-            align="center"
-          />
-
-          <div className="grid grid--3">
-            {serviceGroups.map((group, index) => (
-              <Reveal key={group.id} delay={index * 80} style={{ height: '100%' }}>
-                <article className="card card--hover" style={{ height: '100%' }}>
-                  <span className="badge badge--accent" style={{ alignSelf: 'flex-start' }}>
-                    {group.label}
-                  </span>
-                  <ul className="footer__links" style={{ marginTop: '0.5rem' }}>
-                    {group.items.map((item) => (
-                      <li key={item.slug}>
-                        <Link to={`/services/${item.slug}`} className="link-arrow" style={{ padding: '0.35rem 0' }}>
-                          <Icon name={item.icon} size={16} />
-                          {item.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal>
+            <h2 id="lifecycle-heading" className="section-title--compact" style={{ textAlign: 'center' }}>
+              Built across the technology lifecycle.
+            </h2>
+            <div className="lifecycle-strip">
+              {LIFECYCLE.map((stage, index) => (
+                <span key={stage} className="lifecycle-strip__item">
+                  <span className="lifecycle-strip__dot" aria-hidden="true" />
+                  {stage}
+                  {index < LIFECYCLE.length - 1 ? (
+                    <Icon name="chevron-right" size={15} aria-hidden="true" />
+                  ) : null}
+                </span>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="section section--tight">
+      <section className="section section--tight" aria-labelledby="services-cta-heading">
         <div className="container">
-          <CtaBand
-            eyebrow="Not sure where to start?"
-            title="Let’s find the right first step together."
-            text="Describe the challenge — we will point you to the capability area that fits best, with no obligation."
-            secondary={{ label: 'See our portfolio', to: '/portfolio' }}
-          />
+          <div className="cta-band cta-band--compact">
+            <div className="cta-band__inner">
+              <span className="eyebrow">Next step</span>
+              <h2 id="services-cta-heading">Have a technology challenge?</h2>
+              <p className="lead">
+                Let&apos;s discuss how DTI Technologies can help you turn it into a practical
+                solution.
+              </p>
+              <div className="cta-band__actions">
+                <Button to="/contact" arrow>
+                  Start a conversation
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>

@@ -22,6 +22,12 @@
   padding-block: clamp(2.5rem, 5vw, 4.5rem);
 }
 
+/* For sections sandwiched between two neighbours that already carry their own
+   vertical padding — the stacking otherwise triples the visual gap. */
+.section--snug {
+  padding-block: clamp(1.25rem, 2.5vw, 2rem);
+}
+
 .section--tint {
   background: linear-gradient(180deg, #edf3ff 0%, #e6eeff 100%);
 }
@@ -314,19 +320,18 @@
 .marquee {
   position: relative;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
 }
 
+/* -50% is exactly one `.marquee__item` copy, so the loop is seamless.
+   Duration is tuned for ~60px/s of travel; at 32s this crept along at
+   ~36px/s and looked stopped on large displays. */
 .marquee__track {
   display: flex;
   width: max-content;
   padding-block: 0.4rem;
-  animation: marquee 32s linear infinite;
-}
-
-.marquee:hover .marquee__track {
-  animation-play-state: paused;
+  animation: marquee 18s linear infinite;
 }
 
 .marquee__item {

@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:api": "node server/ditto-api.mjs",
+    "dev:all": "node scripts/dev.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
@@ -13,6 +15,7 @@
     "test": "npm run build && node scripts/interactions.mjs"
   },
   "dependencies": {
+    "@google/genai": "^2.27.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.1"

@@ -15,7 +15,7 @@ export default function Hero() {
       <div className="container hero__inner">
         <div className="hero__content">
           <Enter as="span" className="eyebrow" delay={120} style={{ width: 'fit-content' }}>
-            Technology • Innovation • Transformation
+            Technology tailored to your triumph.
           </Enter>
 
           <Enter as="h1" id="hero-heading" className="hero__title" delay={240}>
@@ -36,23 +36,6 @@ export default function Hero() {
               Talk to Our Team
             </Button>
           </Enter>
-
-          <Enter className="hero__strip" delay={660} style={{ width: '100%' }}>
-            <div className="marquee" aria-label="Core capabilities">
-              <div className="marquee__track">
-                {[0, 1].map((copy) => (
-                  <div className="marquee__item" key={copy} aria-hidden={copy === 1}>
-                    {capabilityStrip.map((item) => (
-                      <span key={`${copy}-${item}`}>
-                        {item}
-                        <span className="marquee__dot">•</span>
-                      </span>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Enter>
         </div>
 
         <div className="hero__visual">
@@ -60,6 +43,23 @@ export default function Hero() {
             <img src={heroVisual} alt="" width="1290" height="860" aria-hidden="true" />
           </span>
         </div>
+
+        <Enter className="hero__strip" delay={660}>
+          <div className="marquee" aria-label="Core capabilities">
+            <div className="marquee__track">
+              {[0, 1].map((copy) => (
+                <div className="marquee__item" key={copy} aria-hidden={copy === 1}>
+                  {capabilityStrip.map((item) => (
+                    <span key={`${copy}-${item}`}>
+                      {item}
+                      <span className="marquee__dot">•</span>
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </Enter>
       </div>
     </section>
   );

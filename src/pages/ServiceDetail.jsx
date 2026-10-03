@@ -3,43 +3,8 @@ import Seo from '../components/Seo.jsx';
 import Icon from '../components/Icon.jsx';
 import Button from '../components/Button.jsx';
 import Reveal from '../components/Reveal.jsx';
-import SectionHeading from '../components/SectionHeading.jsx';
 import Breadcrumbs from '../components/Breadcrumbs.jsx';
-import CtaBand from '../components/CtaBand.jsx';
-import ServiceCard from '../components/ServiceCard.jsx';
 import { getServiceBySlug, services } from '../data/services.js';
-
-function ServiceHero({ service }) {
-  return (
-    <section className="page-hero" aria-labelledby="service-heading">
-      <div className="atmosphere" aria-hidden="true">
-        <span className="atmosphere__blob atmosphere__blob--primary" style={{ top: '-20%', right: '-10%' }} />
-        <span className="atmosphere__grid" />
-      </div>
-
-      <div className="container page-hero__content">
-        <Breadcrumbs
-          items={[
-            { label: 'Home', to: '/' },
-            { label: 'Services', to: '/services' },
-            { label: service.navLabel },
-          ]}
-        />
-        <span className="eyebrow">Service {service.number} • {service.group}</span>
-        <h1 id="service-heading">{service.headline}</h1>
-        <p className="lead">{service.summary}</p>
-        <div className="page-hero__actions">
-          <Button to="/contact" size="lg" arrow>
-            Discuss this service
-          </Button>
-          <Button to="/services" variant="secondary" size="lg">
-            All services
-          </Button>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 export default function ServiceDetail() {
   const { slug } = useParams();
@@ -79,99 +44,138 @@ export default function ServiceDetail() {
         path={`/services/${service.slug}`}
       />
 
-      <ServiceHero service={service} />
+      <section className="page-hero page-hero--compact" aria-labelledby="service-heading">
+        <div className="atmosphere" aria-hidden="true">
+          <span className="atmosphere__blob atmosphere__blob--primary" style={{ top: '-20%', right: '-10%' }} />
+          <span className="atmosphere__grid" />
+        </div>
+        <div className="container page-hero__content">
+          <Breadcrumbs
+            items={[
+              { label: 'Home', to: '/' },
+              { label: 'Services', to: '/services' },
+              { label: service.navLabel },
+            ]}
+          />
+          <span className="eyebrow">
+            Service {service.number} • {service.group}
+          </span>
+          <h1 id="service-heading">{service.headline}</h1>
+          <p className="lead">{service.summary}</p>
+          <div className="page-hero__actions">
+            <Button to="/contact" arrow>
+              Start a conversation
+            </Button>
+            <Button to="/services" variant="secondary">
+              All services
+            </Button>
+          </div>
+        </div>
+      </section>
 
-      <section className="section" aria-labelledby="capabilities-heading">
-        <div className="container split">
-          <Reveal variant="left">
-            <SectionHeading
-              eyebrow="Capabilities"
-              title="What this service covers."
-              description={`Core capability areas included in ${service.title.toLowerCase()}.`}
-              id="capabilities-heading"
-            />
-            <div className="grid grid--2">
-              {service.capabilities.map((capability, index) => (
-                <Reveal key={capability} delay={index * 60} className="reveal--fade">
-                  <article className="card card--hover capability-card">
-                    <span className="capability-card__bullet">
-                      <Icon name="check" size={18} />
-                    </span>
-                    <h3 className="card__title" style={{ fontSize: '1.05rem' }}>
-                      {capability}
-                    </h3>
-                  </article>
-                </Reveal>
-              ))}
-            </div>
+      <section className="section section--tight" aria-labelledby="capabilities-heading">
+        <div className="container">
+          <Reveal>
+            <h2 id="capabilities-heading" className="section-title--compact">
+              What this service covers.
+            </h2>
           </Reveal>
+          <div className="grid grid--3 capability-grid">
+            {service.capabilities.map((capability, index) => (
+              <Reveal key={capability} delay={index * 50} className="reveal--fade">
+                <article className="card card--hover capability-chip">
+                  <span className="capability-chip__icon" aria-hidden="true">
+                    <Icon name="check-circle" size={18} />
+                  </span>
+                  <h3 className="capability-chip__title">{capability}</h3>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
-          <Reveal variant="right">
-            <aside className="service-hero-aside">
-              <span className="eyebrow">Our approach</span>
-              <h2>How we deliver {service.navLabel.toLowerCase()}.</h2>
-              <ul>
-                {service.approach.map((step) => (
-                  <li key={step.title}>
-                    <Icon name="check-circle" size={17} />
-                    <span>
-                      <strong style={{ color: 'var(--text-primary)' }}>{step.title}</strong> — {step.text}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <Button to="/contact" arrow style={{ marginTop: '0.5rem', justifySelf: 'start' }}>
-                Start a conversation
-              </Button>
-            </aside>
+      <section className="section section--tint section--tight" aria-labelledby="approach-heading">
+        <div className="container">
+          <Reveal>
+            <h2 id="approach-heading" className="section-title--compact">
+              Our approach.
+            </h2>
           </Reveal>
+          <div className="approach-track">
+            {service.approach.map((step, index) => (
+              <Reveal key={step.title} delay={index * 60} className="reveal--fade">
+                <div className="approach-step">
+                  <span className="approach-step__num">{String(index + 1).padStart(2, '0')}</span>
+                  <h3 className="approach-step__title">{step.title}</h3>
+                  <p className="approach-step__text">{step.text}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
       {service.note ? (
-        <section className="section section--tight" style={{ paddingTop: 0 }}>
+        <section className="section section--snug">
           <div className="container">
-            <Reveal>
-              <div className="notice">
-                <Icon name="info" size={18} className="notice__icon" />
-                <span>{service.note}</span>
-              </div>
-            </Reveal>
+            <div className="notice">
+              <Icon name="info" size={18} className="notice__icon" />
+              <span>{service.note}</span>
+            </div>
           </div>
         </section>
       ) : null}
 
-      <section className="section section--secondary" aria-labelledby="related-heading">
+      <section className="section section--tight" aria-labelledby="cta-heading">
         <div className="container">
-          <SectionHeading
-            eyebrow="Keep exploring"
-            title="Related services."
-            description="Other capability areas that often complement this engagement."
-            id="related-heading"
-            align="center"
-          />
-          <div className="related-grid">
-            {related.map((item, index) => (
-              <ServiceCard key={item.slug} service={item} index={index} compact />
-            ))}
-          </div>
-          <div style={{ display: 'grid', justifyItems: 'center', marginTop: '2.5rem' }}>
-            <Link to="/services" className="link-arrow">
-              View the full service catalogue
-              <Icon name="arrow-right" size={16} />
-            </Link>
+          <div className="cta-band cta-band--compact">
+            <div className="cta-band__inner">
+              <span className="eyebrow">Next step</span>
+              <h2 id="cta-heading">Let&apos;s build something valuable.</h2>
+              <p className="lead">
+                Share your goals and constraints — we will help you understand what a sensible first
+                step looks like.
+              </p>
+              <div className="cta-band__actions">
+                <Button to="/contact" arrow>
+                  Start a conversation
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section section--tight">
+      <section className="section section--secondary section--tight" aria-labelledby="related-heading">
         <div className="container">
-          <CtaBand
-            eyebrow="Next step"
-            title="Ready to explore this for your business?"
-            text="Share your goals and constraints — we will help you understand what a sensible first step looks like."
-            secondary={{ label: 'Back to services', to: '/services' }}
-          />
+          <h2 id="related-heading" className="section-title--compact">
+            Related services.
+          </h2>
+          <div className="related-grid">
+            {related.map((item) => (
+              <Link
+                key={item.slug}
+                to={`/services/${item.slug}`}
+                className="card card--hover related-card"
+              >
+                <h3 className="related-card__title">{item.navLabel}</h3>
+                <p className="card__text">{item.cardText}</p>
+                <span className="card__footer">
+                  <span className="link-arrow">
+                    Explore service
+                    <Icon name="arrow-right" size={15} />
+                  </span>
+                </span>
+              </Link>
+            ))}
+          </div>
+          <p style={{ textAlign: 'center', marginTop: '1.75rem' }}>
+            <Link to="/services" className="link-arrow">
+              View the full service catalogue
+              <Icon name="arrow-right" size={16} />
+            </Link>
+          </p>
         </div>
       </section>
     </>

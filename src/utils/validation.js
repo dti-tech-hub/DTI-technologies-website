@@ -14,9 +14,9 @@ const put = (errors, key, message) => {
 export function validateContact(values) {
   const errors = {};
 
-  if (!isFilled(values.fullName)) put(errors, 'fullName', 'Full name is required.');
+  if (!isFilled(values.firstName)) put(errors, 'firstName', 'First name is required.');
 
-  if (!isFilled(values.company)) put(errors, 'company', 'Company / Organization is required.');
+  if (!isFilled(values.lastName)) put(errors, 'lastName', 'Last name is required.');
 
   if (!isFilled(values.email)) {
     put(errors, 'email', 'Email address is required.');
@@ -24,15 +24,11 @@ export function validateContact(values) {
     put(errors, 'email', 'Enter a valid email address.');
   }
 
-  if (!isFilled(values.phone)) {
-    put(errors, 'phone', 'Phone number is required.');
-  } else if (!isPhone(values.phone)) {
+  if (isFilled(values.phone) && !isPhone(values.phone)) {
     put(errors, 'phone', 'Enter a valid phone number.');
   }
 
-  if (!isFilled(values.serviceRequired)) put(errors, 'serviceRequired', 'Please select a service.');
-
-  if (!isFilled(values.subject)) put(errors, 'subject', 'Please select a subject.');
+  if (!isFilled(values.inquiryType)) put(errors, 'inquiryType', 'Please select an inquiry type.');
 
   if (!isFilled(values.message)) {
     put(errors, 'message', 'Tell us about your project or requirements.');
@@ -84,3 +80,31 @@ export function validateJobApplication(values) {
 
   return errors;
 }
+
+
+export function validateContactMessage(values) {
+  const errors = {};
+
+  if (!isFilled(values.name)) put(errors, 'name', 'Full name is required.');
+
+  if (!isFilled(values.email)) {
+    put(errors, 'email', 'Work email is required.');
+  } else if (!isEmail(values.email)) {
+    put(errors, 'email', 'Enter a valid email address.');
+  }
+
+  if (isFilled(values.phone) && !isPhone(values.phone)) {
+    put(errors, 'phone', 'Enter a valid phone number.');
+  }
+
+  if (!isFilled(values.service)) put(errors, 'service', 'Please select a service.');
+
+  if (!isFilled(values.message)) {
+    put(errors, 'message', 'Tell us about your project or requirements.');
+  } else if (values.message.trim().length < 20) {
+    put(errors, 'message', 'Please provide at least 20 characters.');
+  }
+
+  return errors;
+}
+

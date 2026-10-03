@@ -33,7 +33,10 @@ export const serviceGroups = [
   {
     id: 'software',
     label: 'SOFTWARE',
-    items: [{ slug: 'application-development', label: 'Application Development', icon: 'code' }],
+    items: [
+      { slug: 'application-development', label: 'Application Development', icon: 'code' },
+      { slug: 'web-applications', label: 'Web Applications', icon: 'globe' },
+    ],
   },
   {
     id: 'consulting',
@@ -66,6 +69,7 @@ export const footerColumns = [
       { label: 'Cyber Security', to: '/services/cyber-security' },
       { label: 'Data', to: '/services/data-engineering' },
       { label: 'Development', to: '/services/application-development' },
+      { label: 'Web Apps', to: '/services/web-applications' },
       { label: 'Consulting', to: '/services/it-consulting' },
     ],
   },

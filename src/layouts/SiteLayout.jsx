@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
-import BackToTop from '../components/BackToTop.jsx';
+import DittoChat from '../components/DittoChat.jsx';
 
 export default function SiteLayout() {
   const location = useLocation();
@@ -21,7 +21,7 @@ export default function SiteLayout() {
         <Outlet />
       </main>
       <Footer />
-      <BackToTop />
+      <DittoChat />
     </>
   );
 }

@@ -1,31 +1,23 @@
-import { useMemo, useState } from 'react';
 import Seo from '../components/Seo.jsx';
 import Icon from '../components/Icon.jsx';
 import Breadcrumbs from '../components/Breadcrumbs.jsx';
 import Button from '../components/Button.jsx';
-import FilterTabs from '../components/FilterTabs.jsx';
-import PortfolioCard from '../components/PortfolioCard.jsx';
-import PortfolioModal from '../components/PortfolioModal.jsx';
-import { EmptyState, LoadingState } from '../components/States.jsx';
 import CtaBand from '../components/CtaBand.jsx';
-import { portfolioCategories, portfolioItems } from '../data/portfolio.js';
-import { useSimulatedLoad } from '../hooks/useSimulatedLoad.js';
+
+const focusAreas = [
+  { icon: 'brain', label: 'AI' },
+  { icon: 'shield', label: 'Cybersecurity' },
+  { icon: 'database', label: 'Data' },
+  { icon: 'code', label: 'Software' },
+  { icon: 'sparkles', label: 'Digital Transformation' },
+];
 
 export default function Portfolio() {
-  const [category, setCategory] = useState('All');
-  const [activeItem, setActiveItem] = useState(null);
-  const loading = useSimulatedLoad(450, 'portfolio');
-
-  const filtered = useMemo(() => {
-    if (category === 'All') return portfolioItems;
-    return portfolioItems.filter((item) => item.category === category);
-  }, [category]);
-
   return (
     <>
       <Seo
         title="Portfolio"
-        description="Selected software, digital solutions, and services — the work showcase of our technology teams."
+        description="Our portfolio is coming soon — a collection of projects across AI, cybersecurity, data, software, and digital transformation."
         path="/portfolio"
       />
 
@@ -37,64 +29,41 @@ export default function Portfolio() {
         <div className="container page-hero__content">
           <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Portfolio' }]} />
           <span className="eyebrow">Our work</span>
-          <h1 id="portfolio-heading">The work we’re proud to put our name on.</h1>
-          <p className="lead">
-            Genuine software, digital solutions, and services delivered for organisations — presented
-            as case studies once approved for publication.
-          </p>
-          <div className="page-hero__actions">
-            <Button to="/contact" size="lg" arrow>
-              Start a conversation
-            </Button>
-          </div>
+          
+          
         </div>
       </section>
 
-      <section className="section" aria-label="Portfolio listing">
+      <section className="section" aria-label="Portfolio coming soon">
         <div className="container">
-          <div className="notice" style={{ marginBottom: '2rem' }}>
-            <Icon name="info" size={18} className="notice__icon" />
-            <span>
-              Real portfolio items have not been supplied yet. The entries below are clearly marked
-              placeholders that demonstrate the layout, filtering, and detail experience.
+          <div className="coming-soon">
+            <div className="coming-soon__glow" aria-hidden="true" />
+            <span className="coming-soon__badge">
+              <span className="coming-soon__pulse" aria-hidden="true" />
+              Stay tuned
             </span>
-          </div>
-
-          <div className="toolbar">
-            <FilterTabs
-              label="Filter portfolio by category"
-              options={portfolioCategories}
-              value={category}
-              onChange={setCategory}
-              idPrefix="portfolio-filter"
-            />
-            <p className="toolbar__count" role="status" aria-live="polite">
-              {loading
-                ? 'Loading portfolio…'
-                : `${filtered.length} ${filtered.length === 1 ? 'item' : 'items'}`}
+            <h2 className="coming-soon__title">Our portfolio is coming soon.</h2>
+            <p className="coming-soon__text">
+              We’re preparing a collection of projects that showcase our work across AI, cybersecurity,
+              data, software, and digital transformation. Stay tuned — exciting work is on the way.
             </p>
-          </div>
-
-          {loading ? (
-            <LoadingState label="Loading portfolio items…" />
-          ) : filtered.length === 0 ? (
-            <EmptyState
-              icon="inbox"
-              title="No portfolio items in this category."
-              text="Nothing has been published here yet. Try another category."
-              action={
-                <Button variant="secondary" size="sm" onClick={() => setCategory('All')}>
-                  Show all categories
-                </Button>
-              }
-            />
-          ) : (
-            <div className="grid grid--3">
-              {filtered.map((item, index) => (
-                <PortfolioCard key={item.id} item={item} index={index} onOpen={setActiveItem} />
+            <ul className="coming-soon__areas">
+              {focusAreas.map((area) => (
+                <li key={area.label} className="coming-soon__chip">
+                  <Icon name={area.icon} size={16} />
+                  {area.label}
+                </li>
               ))}
+            </ul>
+            <div className="coming-soon__actions">
+              <Button to="/contact" variant="primary" arrow>
+                Start a conversation
+              </Button>
+              <Button to="/services" variant="secondary">
+                Explore our services
+              </Button>
             </div>
-          )}
+          </div>
         </div>
       </section>
 
@@ -108,8 +77,6 @@ export default function Portfolio() {
           />
         </div>
       </section>
-
-      <PortfolioModal item={activeItem} onClose={() => setActiveItem(null)} />
     </>
   );
 }

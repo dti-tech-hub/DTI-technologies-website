@@ -7,10 +7,19 @@
  */
 
 export const careersIntro = {
-  headline: "Build What's Next With Us.",
+  headline: 'Build the future with us.',
   support:
-    'We are always looking for curious minds, problem solvers, engineers, designers, and technology enthusiasts who want to build meaningful digital experiences.',
+    "We're building a team of curious thinkers, skilled engineers, and technology enthusiasts who believe in creating meaningful digital solutions.",
 };
+
+export const hiringAreas = [
+  'Technology',
+  'AI',
+  'Cybersecurity',
+  'Data',
+  'Software',
+  'Digital Transformation',
+];
 
 export const jobDepartments = [
   'All Departments',

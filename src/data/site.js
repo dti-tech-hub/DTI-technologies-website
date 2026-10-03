@@ -9,7 +9,7 @@ export const site = {
   name: 'DTI Technologies',
   // Browser-tab title brand — used by Seo for document.title / og:title.
   titleBrand: 'DTI Technologies',
-  tagline: 'Technology, Innovation, Transformation',
+  tagline: 'Design. Think. Innovate',
   description:
     'We help businesses turn complex technology challenges into intelligent, secure, scalable digital solutions.',
   // Placeholder domain — official domain pending (MASTER_README section 63).
@@ -137,43 +137,39 @@ export const processSteps = [
 ];
 
 /**
- * Testimonials are PENDING approved client feedback (MASTER_README section 37).
- * These clearly marked placeholders demonstrate the layout only.
+ * Client testimonials supplied by the company (MASTER_README section 37).
+ * Quotes and names are approved client feedback. No job titles or
+ * organisations were supplied, so none are shown.
  */
 export const testimonials = [
   {
     id: 't1',
-    placeholder: true,
+    placeholder: false,
     quote:
-      'Placeholder testimonial — an approved client quote will appear here once supplied by the company.',
-    author: 'Client name pending',
-    role: 'Role and organisation pending approval',
+      'The DTI team understood our requirements quickly and translated them into a practical technology solution. Their communication throughout the project made the entire process straightforward.',
+    author: 'Siva Kumar',
   },
   {
     id: 't2',
-    placeholder: true,
+    placeholder: false,
     quote:
-      'Placeholder testimonial — customer feedback, names, and job titles will only be published with written approval.',
-    author: 'Client name pending',
-    role: 'Role and organisation pending approval',
+      "What stood out was the team's approach to understanding the problem before proposing a solution. They were responsive, clear, and focused on delivering something useful for our business.",
+    author: 'Ruthvik Goud',
   },
   {
     id: 't3',
-    placeholder: true,
+    placeholder: false,
     quote:
-      'Placeholder testimonial — real outcomes and references replace this content before the site goes live.',
-    author: 'Client name pending',
-    role: 'Role and organisation pending approval',
+      'We appreciated the combination of technical knowledge and practical thinking. DTI kept the project focused on our actual business requirements rather than unnecessary complexity.',
+    author: 'Hari',
   },
-];
-
-/**
- * Team profiles are PENDING (MASTER_README section 63). Placeholders only.
- */
-export const teamPlaceholders = [
-  { id: 'team-1', name: 'Name pending approval', role: 'Leadership role pending' },
-  { id: 'team-2', name: 'Name pending approval', role: 'Technology role pending' },
-  { id: 'team-3', name: 'Name pending approval', role: 'Delivery role pending' },
+  {
+    id: 't4',
+    placeholder: false,
+    quote:
+      'DTI brought a structured approach to our technology requirements and kept us informed at every stage. The team was professional and easy to work with.',
+    author: 'Mubeen',
+  },
 ];
 
 /**

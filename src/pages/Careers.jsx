@@ -2,15 +2,16 @@ import Seo from '../components/Seo.jsx';
 import Icon from '../components/Icon.jsx';
 import Breadcrumbs from '../components/Breadcrumbs.jsx';
 import SectionHeading from '../components/SectionHeading.jsx';
+import Button from '../components/Button.jsx';
 import Reveal from '../components/Reveal.jsx';
-import { benefits, careersIntro } from '../data/careers.js';
+import { benefits, careersIntro, hiringAreas } from '../data/careers.js';
 
 export default function Careers() {
   return (
     <>
       <Seo
         title="Careers"
-        description="Build what's next with us — explore open roles, benefits, and the application experience."
+        description="Build the future with us — career opportunities at DTI Technologies are coming soon."
         path="/careers"
       />
 
@@ -27,14 +28,47 @@ export default function Careers() {
         </div>
       </section>
 
-      <section className="section" aria-label="Open roles">
+      <section className="section" aria-labelledby="opportunities-heading">
         <div className="container">
-          <div className="notice" style={{ marginBottom: '2rem' }}>
-            <Icon name="info" size={18} className="notice__icon" />
-            <span>
-              No career opportunities are available today. They will be uploaded in the future.
-            </span>
-          </div>
+          <Reveal>
+            <div className="card" style={{ maxWidth: '52rem', margin: '0 auto', textAlign: 'center' }}>
+              <span className="value-card__glyph" style={{ margin: '0 auto 1.25rem' }}>
+                <Icon name="compass" size={21} />
+              </span>
+              <h2 id="opportunities-heading" className="card__title">
+                Career opportunities are coming soon.
+              </h2>
+              <p className="card__text" style={{ maxWidth: '40rem', margin: '0 auto 1rem' }}>
+                We're growing our team and preparing opportunities across technology, AI,
+                cybersecurity, data, software, and digital transformation. Stay tuned for
+                upcoming openings — and feel free to reach out if you'd like to be part of
+                DTI Technologies.
+              </p>
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '0.5rem',
+                  justifyContent: 'center',
+                  margin: '1.5rem 0',
+                }}
+              >
+                {hiringAreas.map((area) => (
+                  <span key={area} className="badge">
+                    {area}
+                  </span>
+                ))}
+              </div>
+              <div className="cta-band__actions" style={{ justifyContent: 'center' }}>
+                <Button to="/contact" size="lg" arrow>
+                  Talk to Our Team
+                </Button>
+                <Button to="/contact" variant="secondary" size="lg">
+                  Contact Us
+                </Button>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -48,8 +82,8 @@ export default function Careers() {
             align="center"
           />
           <div className="benefits-grid">
-            {benefits.map((benefit, index) => (
-              <Reveal key={benefit.title} delay={index * 70} style={{ height: '100%' }}>
+            {benefits.map((benefit) => (
+              <div key={benefit.title} style={{ height: '100%' }}>
                 <article className="card card--hover value-card" style={{ height: '100%' }}>
                   <span className="value-card__glyph">
                     <Icon name={benefit.icon} size={21} />
@@ -59,7 +93,7 @@ export default function Careers() {
                   </h3>
                   <p className="card__text">{benefit.text}</p>
                 </article>
-              </Reveal>
+              </div>
             ))}
           </div>
         </div>

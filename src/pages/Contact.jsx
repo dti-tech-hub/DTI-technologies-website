@@ -2,74 +2,23 @@ import { useState } from 'react';
 import Seo from '../components/Seo.jsx';
 import Icon from '../components/Icon.jsx';
 import Breadcrumbs from '../components/Breadcrumbs.jsx';
-import Button from '../components/Button.jsx';
 import Reveal from '../components/Reveal.jsx';
 import { Input, Select, Textarea } from '../components/Fields.jsx';
 import { ErrorState, SuccessState } from '../components/States.jsx';
-import { Link } from 'react-router-dom';
-import { validateContact } from '../utils/validation.js';
-import { simulateSubmit } from '../utils/form.js';
-import contactImage from '../assets/contact.jpeg';
+import { validateContactMessage } from '../utils/validation.js';
+import { services } from '../data/services.js';
+import contactImage from '../assets/contact.png';
 
-const SERVICE_OPTIONS = [
-  '',
-  'Generative AI',
-  'Cyber Security',
-  'Data Engineering',
-  'Application Development',
-  'Data Management',
-  'IT Consulting Services',
-  'Outsourcing Services',
-  'Maintenance Services',
-  'Other Services',
-];
-
-const SUBJECT_OPTIONS = [
-  '',
-  'Project inquiry',
-  'Partnership / Collaboration',
-  'Sales / Pricing question',
-  'Technical support',
-  'General inquiry',
-  'Other',
-];
-
-const CONTACT_METHODS = [
-  '',
-  'Email',
-  'Phone',
-  'WhatsApp',
-];
+const SERVICE_OPTIONS = ['', ...services.map((service) => service.title)];
 
 const INITIAL = {
-  fullName: '',
+  name: '',
   company: '',
   email: '',
   phone: '',
-  serviceRequired: '',
-  subject: '',
+  service: '',
   message: '',
-  preferredContact: '',
-  consent: false,
 };
-
-const journeySteps = [
-  {
-    number: '01',
-    title: 'We listen',
-    description: 'Tell us about your challenge, idea, or requirement.',
-  },
-  {
-    number: '02',
-    title: 'We understand',
-    description: 'We review your requirements and identify the right technology approach.',
-  },
-  {
-    number: '03',
-    title: 'We respond',
-    description: 'We discuss the next steps and how DTI Technologies can help.',
-  },
-];
 
 export default function Contact() {
   const [values, setValues] = useState(INITIAL);
@@ -77,15 +26,14 @@ export default function Contact() {
   const [status, setStatus] = useState('idle');
 
   const update = (key) => (event) => {
-    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-    setValues((current) => ({ ...current, [key]: value }));
+    setValues((current) => ({ ...current, [key]: event.target.value }));
     setErrors((current) => (current[key] ? { ...current, [key]: undefined } : current));
     if (status === 'error') setStatus('idle');
   };
 
   const handleSubmit = async (event) => {
     event?.preventDefault?.();
-    const nextErrors = validateContact(values);
+    const nextErrors = validateContactMessage(values);
     setErrors(nextErrors);
 
     const errorKeys = Object.keys(nextErrors);
@@ -96,7 +44,22 @@ export default function Contact() {
 
     setStatus('submitting');
     try {
-      await simulateSubmit({ delay: 1400 });
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: values.name,
+          company: values.company,
+          email: values.email,
+          phone: values.phone,
+          service: values.service,
+          message: values.message,
+        }),
+      });
+      const data = await response.json().catch(() => null);
+      if (!response.ok || !data?.ok) {
+        throw new Error(data?.error || 'Submission failed');
+      }
       setStatus('success');
     } catch {
       setStatus('error');
@@ -115,33 +78,20 @@ export default function Contact() {
     <>
       <Seo
         title="Contact Us"
-        description="Get in touch with DTI Technologies. We'd love to hear about your project or challenge."
+        description="Get in touch with DTI Technologies — email, phone, WhatsApp, and our contact form."
         path="/contact"
       />
 
-      {/* 1. HERO */}
       <section className="contact-hero" aria-labelledby="contact-hero-heading">
         <div className="container contact-hero__inner">
           <div className="contact-hero__content">
             <Reveal variant="left">
-              <span className="eyebrow">Contact us</span>
+              <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Contact Us' }]} />
+              <span className="eyebrow">Contact Us</span>
               <h1 id="contact-hero-heading">Let&apos;s build something valuable.</h1>
               <p className="lead">
-                Have a technology challenge, idea, or opportunity? Tell us what you&apos;re working on and let&apos;s start the conversation.
+                Have a technology challenge, idea, or opportunity? Let&apos;s start the conversation.
               </p>
-              <div className="contact-hero__actions">
-                <Button to="#contact-form" size="lg" arrow onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  document.getElementById('contact-fullName')?.focus({ preventScroll: true });
-                }}>
-                  Start a conversation
-                </Button>
-                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn btn--whatsapp btn--lg">
-                  <Icon name="message-square" size={20} />
-                  <span>WhatsApp us</span>
-                </a>
-              </div>
             </Reveal>
           </div>
 
@@ -150,10 +100,8 @@ export default function Contact() {
               <figure className="contact-hero__figure">
                 <img
                   src={contactImage}
-                  alt="DTI Technologies contact team"
+                  alt="DTI Technologies contact"
                   loading="eager"
-                  width="800"
-                  height="600"
                   decoding="async"
                 />
               </figure>
@@ -162,12 +110,11 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* 2. CONTACT AREA */}
-      <section className="section contact-area" aria-labelledby="contact-area-heading">
+      <section className="section contact-area" aria-labelledby="contact-details-heading">
         <div className="container contact-area__grid">
           <div className="contact-area__info">
             <Reveal variant="left">
-              <h2>Get in touch</h2>
+              <h2 id="contact-details-heading">Get in touch</h2>
 
               <div className="contact-details">
                 <div className="contact-detail">
@@ -196,7 +143,7 @@ export default function Contact() {
 
                 <div className="contact-detail">
                   <span className="contact-detail__icon" aria-hidden="true">
-                    <Icon name="map-pin" size={22} />
+                    <Icon name="pin" size={22} />
                   </span>
                   <div>
                     <h3>Location</h3>
@@ -212,10 +159,47 @@ export default function Contact() {
                   rel="noopener noreferrer"
                   className="btn btn--whatsapp btn--lg"
                 >
-                  <Icon name="message-square" size={22} />
+                  <Icon name="send" size={22} />
                   <span>Chat with us on WhatsApp</span>
-                  <Icon name="external-link" size={18} />
                 </a>
+              </div>
+
+              <div style={{ marginTop: '2rem' }}>
+                <h3 style={{ marginBottom: '0.75rem' }}>Connect with us</h3>
+                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn--secondary btn--sm"
+                    aria-label="WhatsApp"
+                  >
+                    <Icon name="send" size={18} />
+                    <span>WhatsApp</span>
+                  </a>
+                  <a
+                    href="mailto:dtitechnologies@gmail.com"
+                    className="btn btn--secondary btn--sm"
+                    aria-label="Email"
+                  >
+                    <Icon name="mail" size={18} />
+                    <span>Email</span>
+                  </a>
+                  <span className="btn btn--secondary btn--sm" aria-disabled="true" title="LinkedIn profile coming soon">
+                    <Icon name="linkedin" size={18} />
+                    <span>LinkedIn</span>
+                  </span>
+                  <a
+                    href="https://www.instagram.com/dtitechnologies?igsh=MXR0NGhjdjRtOG1pYg=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn--secondary btn--sm"
+                    aria-label="Instagram"
+                  >
+                    <Icon name="instagram" size={18} />
+                    <span>Instagram</span>
+                  </a>
+                </div>
               </div>
             </Reveal>
           </div>
@@ -226,29 +210,19 @@ export default function Contact() {
                 {status === 'success' ? (
                   <SuccessState
                     title="Thank you. Your inquiry has been received."
-                    text="This is a frontend demonstration — no data was transmitted or stored. Connect a backend in Phase 2 to receive real inquiries."
+                    text="We've received your message and will get back to you shortly."
                     action={
-                      <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-                        <button type="button" className="btn btn--primary btn--sm" onClick={handleReset}>
-                          Send another message
-                        </button>
-                        <Link to="/services" className="btn btn--secondary btn--sm">
-                          Explore services
-                        </Link>
-                      </div>
+                      <button type="button" className="btn btn--primary btn--sm" onClick={handleReset}>
+                        Send another message
+                      </button>
                     }
                   />
                 ) : (
-                  <form className="form" onSubmit={handleSubmit} noValidate aria-describedby="contact-form-note">
+                  <form className="form" onSubmit={handleSubmit} noValidate>
                     <div>
                       <span className="eyebrow">Send us a message</span>
                       <h2>Start a Conversation</h2>
                     </div>
-
-                    <p className="form__note" id="contact-form-note">
-                      Fields marked with <span className="field__required">*</span> are required. Demo form —
-                      validation runs in your browser only.
-                    </p>
 
                     {status === 'error' ? (
                       <ErrorState
@@ -257,218 +231,89 @@ export default function Contact() {
                       />
                     ) : null}
 
-                    <div className="form__row">
-                      <Input
-                        id="contact-fullName"
-                        label="Full Name"
-                        required
-                        autoComplete="name"
-                        value={values.fullName}
-                        onChange={update('fullName')}
-                        error={errors.fullName}
-                        placeholder="John Doe"
-                      />
-                    </div>
+                    <Input
+                      id="contact-name"
+                      label="Full Name"
+                      required
+                      autoComplete="name"
+                      value={values.name}
+                      onChange={update('name')}
+                      error={errors.name}
+                    />
 
-                    <div className="form__row">
-                      <Input
-                        id="contact-company"
-                        label="Company / Organization"
-                        required
-                        autoComplete="organization"
-                        value={values.company}
-                        onChange={update('company')}
-                        error={errors.company}
-                        placeholder="Acme Inc."
-                      />
-                    </div>
+                    <Input
+                      id="contact-company"
+                      label="Company / Organization"
+                      optional
+                      autoComplete="organization"
+                      value={values.company}
+                      onChange={update('company')}
+                      error={errors.company}
+                    />
 
-                    <div className="form__row">
-                      <Input
-                        id="contact-email"
-                        label="Work Email"
-                        type="email"
-                        required
-                        autoComplete="email"
-                        value={values.email}
-                        onChange={update('email')}
-                        error={errors.email}
-                        placeholder="john@acme.com"
-                      />
-                    </div>
+                    <Input
+                      id="contact-email"
+                      label="Work Email"
+                      type="email"
+                      required
+                      autoComplete="email"
+                      value={values.email}
+                      onChange={update('email')}
+                      error={errors.email}
+                    />
 
-                    <div className="form__row">
-                      <Input
-                        id="contact-phone"
-                        label="Phone Number"
-                        type="tel"
-                        required
-                        autoComplete="tel"
-                        value={values.phone}
-                        onChange={update('phone')}
-                        error={errors.phone}
-                        placeholder="+91 70134 94877"
-                      />
-                    </div>
+                    <Input
+                      id="contact-phone"
+                      label="Phone Number"
+                      type="tel"
+                      optional
+                      autoComplete="tel"
+                      value={values.phone}
+                      onChange={update('phone')}
+                      error={errors.phone}
+                    />
 
-                    <div className="form__row">
-                      <Select
-                        id="contact-serviceRequired"
-                        label="Service Required"
-                        required
-                        value={values.serviceRequired}
-                        onChange={update('serviceRequired')}
-                        error={errors.serviceRequired}
-                      >
-                        {SERVICE_OPTIONS.map((option, optionIndex) => (
-                          <option key={option || 'default'} value={option} disabled={optionIndex === 0}>
-                            {optionIndex === 0 ? 'Select a service' : option}
-                          </option>
-                        ))}
-                      </Select>
-                    </div>
-
-                    <div className="form__row">
-                      <Select
-                        id="contact-subject"
-                        label="Subject"
-                        required
-                        value={values.subject}
-                        onChange={update('subject')}
-                        error={errors.subject}
-                      >
-                        {SUBJECT_OPTIONS.map((option, optionIndex) => (
-                          <option key={option || 'default'} value={option} disabled={optionIndex === 0}>
-                            {optionIndex === 0 ? 'Select a subject' : option}
-                          </option>
-                        ))}
-                      </Select>
-                    </div>
+                    <Select
+                      id="contact-service"
+                      label="Service Required"
+                      required
+                      value={values.service}
+                      onChange={update('service')}
+                      error={errors.service}
+                    >
+                      {SERVICE_OPTIONS.map((option, optionIndex) => (
+                        <option key={option || 'default'} value={option} disabled={optionIndex === 0}>
+                          {optionIndex === 0 ? 'Select a service' : option}
+                        </option>
+                      ))}
+                    </Select>
 
                     <Textarea
                       id="contact-message"
-                      label="Message / Requirements"
+                      label="Message"
                       required
-                      placeholder="Tell us about your project, challenge, or requirements…"
+                      rows={5}
                       value={values.message}
                       onChange={update('message')}
                       error={errors.message}
                       hint="Minimum 20 characters."
                     />
 
-                    <div className="form__row">
-                      <Select
-                        id="contact-preferredContact"
-                        label="Preferred Contact Method (optional)"
-                        optional
-                        value={values.preferredContact}
-                        onChange={update('preferredContact')}
-                        error={errors.preferredContact}
-                      >
-                        {CONTACT_METHODS.map((option, optionIndex) => (
-                          <option key={option || 'default'} value={option} disabled={optionIndex === 0}>
-                            {optionIndex === 0 ? 'Select preferred method' : option}
-                          </option>
-                        ))}
-                      </Select>
-                    </div>
-
-                    <div className="field">
-                      <label className="checkbox" htmlFor="contact-consent">
-                        <input
-                          type="checkbox"
-                          id="contact-consent"
-                          checked={values.consent}
-                          onChange={update('consent')}
-                          required
-                          aria-invalid={errors.consent ? 'true' : undefined}
-                          aria-describedby={errors.consent ? 'contact-consent-error' : undefined}
-                        />
-                        <span>
-                          I agree that DTI Technologies may use this information to respond to my inquiry.
-                          <a href="/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-                        </span>
-                      </label>
-                      {errors.consent ? (
-                        <span className="field__error" id="contact-consent-error" role="alert">
-                          <Icon name="alert" size={14} />
-                          {errors.consent}
-                        </span>
-                      ) : null}
-                    </div>
-
-                    <div style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap' }}>
-                      <button
-                        type="submit"
-                        className="btn btn--primary btn--lg"
-                        disabled={status === 'submitting'}
-                        aria-busy={status === 'submitting'}
-                      >
-                        {status === 'submitting' ? <span className="btn__spinner" aria-hidden="true" /> : null}
-                        {status === 'submitting' ? 'Sending…' : 'Send Message'}
-                      </button>
-                      <button type="button" className="btn btn--ghost btn--lg" onClick={handleReset}>
-                        Clear form
-                      </button>
-                    </div>
+                    <button
+                      type="submit"
+                      className="btn btn--primary btn--lg"
+                      disabled={status === 'submitting'}
+                      aria-busy={status === 'submitting'}
+                    >
+                      {status === 'submitting' ? <span className="btn__spinner" aria-hidden="true" /> : null}
+                      <span>{status === 'submitting' ? 'Sending…' : 'Send Message'}</span>
+                      {status !== 'submitting' ? <Icon name="arrow-right" size={17} className="btn__arrow" /> : null}
+                    </button>
                   </form>
                 )}
               </div>
             </Reveal>
           </div>
-        </div>
-      </section>
-
-      {/* 3. WHAT HAPPENS NEXT */}
-      <section className="section contact-journey" aria-labelledby="journey-heading">
-        <div className="container">
-          <div className="section-heading section-heading--center">
-            <Reveal>
-              <span className="eyebrow">What happens next</span>
-              <h2 id="journey-heading">A clear path from conversation to solution.</h2>
-            </Reveal>
-          </div>
-
-          <Reveal delay={100}>
-            <div className="journey-track">
-              {journeySteps.map((step, index) => (
-                <div key={step.number} className="journey-step">
-                  <div className="journey-step__circle" aria-hidden="true">
-                    <span className="journey-step__number">{step.number}</span>
-                  </div>
-                  <div className="journey-step__content">
-                    <h3>{step.title}</h3>
-                    <p>{step.description}</p>
-                  </div>
-                  {index < journeySteps.length - 1 && (
-                    <span className="journey-connector" aria-hidden="true" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 4. FINAL CTA */}
-      <section className="section section--tight contact-cta" aria-labelledby="cta-heading">
-        <div className="container">
-          <Reveal>
-            <div className="cta-band">
-              <div className="cta-band__inner">
-                <span className="eyebrow">Ready to start?</span>
-                <h2 id="cta-heading">Have a technology challenge?</h2>
-                <p className="lead">
-                  Let&apos;s talk about how DTI Technologies can help turn your ideas into valuable technology.
-                </p>
-                <div className="cta-band__actions">
-                  <Button to="/contact" size="lg" arrow>
-                    Start a conversation
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </Reveal>
         </div>
       </section>
     </>
