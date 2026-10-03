@@ -126,7 +126,7 @@ function getFallbackResponse(messages = []) {
   if (/contact|email|phone|call|location|address|reach|touch|whatsapp/i.test(text)) {
     return (
       "You can reach DTI Technologies at:\n\n" +
-      "• Email: dtitechnologies@gmail.com\n" +
+      "• Email: dtitechnologiespvtltd@gmail.com\n" +
       "• Phone / WhatsApp: +91 70134 94877\n" +
       "• Location: Kadapa, Andhra Pradesh, India\n\n" +
       "Or visit our /contact page to send us a direct message!"
@@ -154,7 +154,7 @@ function getFallbackResponse(messages = []) {
   return (
     "Thanks for chatting! I'm Ditto, DTI Technologies' AI assistant.\n\n" +
     "DTI Technologies designs and builds intelligent, secure, and scalable digital solutions (AI, Data, Security, Software, Consulting).\n\n" +
-    "Feel free to explore our /services page or reach out to our team at dtitechnologies@gmail.com or +91 70134 94877 (/contact)."
+    "Feel free to explore our /services page or reach out to our team at dtitechnologiespvtltd@gmail.com or +91 70134 94877 (/contact)."
   );
 }
 

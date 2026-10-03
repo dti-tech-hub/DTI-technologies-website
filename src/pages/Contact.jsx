@@ -123,8 +123,8 @@ export default function Contact() {
                   </span>
                   <div>
                     <h3>Email</h3>
-                    <a href="mailto:dtitechnologies@gmail.com" className="contact-detail__link">
-                      dtitechnologies@gmail.com
+                    <a href="mailto:dtitechnologiespvtltd@gmail.com" className="contact-detail__link">
+                      dtitechnologiespvtltd@gmail.com
                     </a>
                   </div>
                 </div>
@@ -178,7 +178,7 @@ export default function Contact() {
                     <span>WhatsApp</span>
                   </a>
                   <a
-                    href="mailto:dtitechnologies@gmail.com"
+                    href="mailto:dtitechnologiespvtltd@gmail.com"
                     className="btn btn--secondary btn--sm"
                     aria-label="Email"
                   >

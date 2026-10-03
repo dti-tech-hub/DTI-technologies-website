@@ -1420,8 +1420,35 @@ select.field__control option {
   .ditto-panel {
     right: 0.75rem;
     left: 0.75rem;
+    bottom: calc(1rem + 64px);
     width: auto;
-    height: calc(100dvh - 6.5rem);
+    height: min(470px, calc(100dvh - 8rem));
+    max-height: 65dvh;
+  }
+
+  .ditto-launcher {
+    right: 1rem;
+    bottom: 1rem;
+    width: 50px;
+    height: 50px;
+  }
+
+  .ditto-panel__body {
+    padding: 0.75rem;
+  }
+
+  .ditto-welcome {
+    padding: 0.5rem 0.25rem;
+    gap: 0.6rem;
+  }
+
+  .ditto-welcome__text {
+    font-size: 0.9rem;
+  }
+
+  .ditto-msg__bubble {
+    max-width: 88%;
+    font-size: 0.88rem;
   }
 }
 
@@ -1461,8 +1488,10 @@ select.field__control option {
   .ditto-panel {
     right: 0.75rem;
     left: 0.75rem;
+    bottom: calc(1rem + 58px);
     width: auto;
-    height: calc(100dvh - 6.5rem);
+    height: min(450px, calc(100dvh - 8rem));
+    max-height: 73dvh;
   }
 
   .ditto-launcher {
